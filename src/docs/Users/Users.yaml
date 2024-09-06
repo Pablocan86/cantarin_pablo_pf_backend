@@ -1,0 +1,84 @@
+paths:
+  /api/users/:
+    get:
+      tags:
+        - Users
+      summary: Muestra todos los usuarios registrados
+      description: Se debe estar logueado como admin
+      responses:
+        "200":
+          description: Lista de usuarios visualizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: No se puede ver usuarios
+  /api/users/premium/{uid}:
+    get:
+      tags:
+        - Users
+      summary: Muestra página para cambiar rol de usuario
+      description: Se debe ser admin para poder ver este endpoint
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario
+          schema:
+            $type: string
+    put:
+      tags:
+        - Users
+      summary: Actualiza rol de user a preimum o viceversa
+      description: Se debe ser admin para poder ver este endpoint
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario
+          schema:
+            $type: string
+      responses:
+        "202":
+          description: Se cambio rol de usuario
+        "505":
+          description: Ocurrio un error al procesar la solicitud
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por MongoDB
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo electrónico del usuario, campo único
+        age:
+          type: integer
+          description: Edad del usuario
+        password:
+          type: string
+          description: Contraseña hasheada
+        cart:
+          type: string
+          description: ID del carrito creado para este usuario
+        rol:
+          type: string
+          description: Puede ser 'admin', 'premium', o 'user'
+      example:
+        _id: "638b8c323f3a4b3be6dc397e"
+        first_name: Rolan
+        last_name: Garros
+        email: rolanGarros@gmail.com
+        age: 37
+        password: "$2a$10$erl3wheS0Efjq0UqLpVgx.EGGc/2KqxToyT2cSwZc8ImKcq2luZL6"
+        cart: "668d5a5838afb182bb7ae891"
+        rol: user

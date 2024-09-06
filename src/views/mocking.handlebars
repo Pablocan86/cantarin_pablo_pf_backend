@@ -1,0 +1,18 @@
+<div>
+  <section class="sectionProducts">
+    <h2>MOCKING TEST</h2>
+    <div class="productsContainer">
+      {{#each products}}
+        <div class="cardProduct">
+          <h3>{{this.title}}</h3>
+          <img
+            class="productImage"
+            src="{{this.thumbnail}}"
+            alt="{{this.title}}"
+          />
+          <p>$ {{this.price}}</p>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+</div>

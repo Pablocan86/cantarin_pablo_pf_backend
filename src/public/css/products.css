@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+h2 {
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+.productsContainer {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.userInfo {
+  background-color: black;
+  color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#imgCart {
+  background-color: white;
+  box-shadow: 0px 0px 10px blue;
+  font-size: 2rem;
+  text-decoration: none;
+  color: black;
+  border-radius: 50%;
+  padding: 5px;
+  position: absolute;
+  top: 15px;
+  left: 90%;
+}
+
+.quantity {
+  position: absolute;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-color: blue;
+  box-shadow: 0px 0px 5px black;
+  color: white;
+  font-size: 1rem;
+  border-radius: 50%;
+  padding: 5px 10px 5px 10px;
+
+  text-align: center;
+  bottom: 70%;
+  left: 70%;
+}
+.sectionProducts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.sectionProducts h2 {
+  width: 100%;
+}
+.cardProduct {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  box-shadow: 0px 2px 5px gray;
+  border-radius: 5px;
+}
+.cardProduct h3 {
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.productImage {
+  width: 100px;
+  height: 100px;
+}
+
+.productsManager {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.productsManager h2 {
+  width: 100%;
+  margin-top: 10px;
+}
+.productsManagerForm,
+.updateProductForm {
+  width: 90%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.buttonDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 25%;
+  padding-right: 25%;
+}
+.addButton,
+.updateButton {
+  background-color: blue;
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid blue;
+  border-radius: 5px;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.addButton:hover,
+.updateButton:hover {
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+}
+
+.detailsProduct {
+  margin: auto;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.viewDetails {
+  text-align: center;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.viewDetails:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+.deleteButton,
+.closeSession {
+  background-color: rgb(240, 30, 65);
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid red;
+  border-radius: 5px;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+.deleteButton:hover,
+.closeSession:hover {
+  background-color: white;
+  color: red;
+}
+.error {
+  background-color: rgb(240, 30, 65);
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.agregado {
+  background-color: rgb(15, 221, 15);
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.linkOtherPage {
+  background-color: blue;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+}
+
+.linksDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.linkOtherPage:hover {
+  border: 1px solid blue;
+  background-color: white;
+  color: blue;
+}
+
+.linkPerfil {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

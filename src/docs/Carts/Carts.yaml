@@ -1,0 +1,147 @@
+paths:
+  /carts:
+    get:
+      tags:
+        - Carts
+      summary: Muestra todos los carritos en la base de datos
+      responses:
+        "200":
+          description: Lista de carritos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: No se encuentran carritos
+  /carts/{cid}/purchase:
+    get:
+      tags:
+        - Carts
+      summary: Vista de los productos que estan en stock
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+    post:
+      tags:
+        - Carts
+      summary: Hace la compra y envía correo electrónico al usuario
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+  /carts/createcart:
+    post:
+      tags:
+        - Carts
+      summary: Crea  carrito en la base de datos
+      responses:
+        "200":
+          description: Carrito creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error al crear carrito
+  /carts/{cid}:
+    get:
+      tags:
+        - Carts
+      summary: Muestra carrito por ID
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+  /carts/{cid}/products/{pid}:
+    post:
+      tags:
+        - Carts
+      summary: Agrega un producto al carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+        - name: pid
+          in: path
+          required: true
+          description: id del producto a agregar
+          schema:
+            $type: string
+    put:
+      tags:
+        - Carts
+      summary: Actualiza cantidad del producto que ya esta en el carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+        - name: pid
+          in: path
+          required: true
+          description: id del producto a agregar
+          schema:
+            $type: string
+    delete:
+      tags:
+        - Carts
+      summary: Elimina producto del carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+        - name: pid
+          in: path
+          required: true
+          description: id del producto a eliminar
+          schema:
+            $type: string
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ObjectId of the product
+              quantity:
+                type: integer
+                description: Quantity of the product
+              totalPrice:
+                type: number
+                format: float
+                description: Total price of the product
+          default: []
+          description: List of products in the cart
+        total:
+          type: number
+          format: float
+          description: Total price of the cart

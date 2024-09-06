@@ -1,0 +1,64 @@
+paths:
+  /messages:
+    get:
+      tags:
+        - Messages
+      summary: Vista del chat
+    post:
+      tags:
+        - Messages
+      summary: Guarda mensaje en base de datos
+      description: Es necesario ser usuario registrado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/Message"
+      respones:
+        "200":
+          description: Mensaje enviado
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Message"
+  /messages/{uid}:
+    delete:
+      tags:
+        - Messages
+      summary: Borra mensaje específico
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del mensaje
+          schema:
+            $type: string
+      responses:
+        "201":
+          description: Mensaje borrado
+        "400":
+          description: No se encuentra mensaje con ese id
+        "500":
+          description: Ocurrio un problema al procesar la solicitud
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB
+        user:
+          type: string
+          description: Nombre del usuario
+        date:
+          type: date
+          description: Fecha y hora del mensaje
+  requestBodies:
+    Message:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          description: Mensaje a enviar

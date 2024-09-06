@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 15vh;
+  width: 100%;
+}
+nav {
+  width: 70%;
+}
+nav ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 30px;
+}

@@ -1,0 +1,17 @@
+<div>
+  <section class="sectionProducts">
+    <h2>PRODUCTOS</h2>
+    <div class="productsContainer">
+      {{#each products}}
+        <div class="cardProduct">
+          <p>{{title}}</p>
+          <img class="productImage" src="{{thumbnail}}" alt="" />
+          <p>$ {{price}}</p>
+          <button class="addButton" data-id="{{_id}}">Agregar </button>
+        </div>
+      {{/each}}
+    </div>
+    <a href="./productsManager">Administrar productos</a>
+  </section>
+  
+  <div>

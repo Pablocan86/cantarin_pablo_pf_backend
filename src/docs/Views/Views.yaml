@@ -1,0 +1,53 @@
+paths:
+  /login:
+    get:
+      tags:
+        - Views
+      summary: Vista del página de logueo
+  /changepassword:
+    get:
+      tags:
+        - Views
+      summary: Vista de la página para cambiar la contraseña
+    post:
+      tags:
+        - Views
+      summary: Envia un link al correo que se paso por body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/sendEmail"
+  /reset_password:
+    get:
+      tags:
+        - Views
+      summary: Vista de página para cambiar contraseña
+      description: Tiene query con un token que se genera en el post de changepassword
+      parameters:
+        - in: query
+          name: token
+          required: true
+          schema:
+            type: string
+  /userregistrade:
+    get:
+      tags:
+        - Views
+      summary: Muestra una vista de usuario registrado
+  /register:
+    get:
+      tags:
+        - Views
+      summary: Vista para regitrar usuario nuevo
+components:
+  requestBodies:
+    sendEmail:
+      type: object
+      properties:
+        correo:
+          type: string
+          description: Correo del usuario
+      example:
+        correo: pablo.cantarin86@gmail.com

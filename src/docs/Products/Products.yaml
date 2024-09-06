@@ -1,0 +1,159 @@
+paths:
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Muestra todos los productos en la base de datos
+  /productDetails/{pid}:
+    get:
+      tags:
+        - Products
+      summary: Muetra detalles de producto
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ID de producto a mostrar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Producto encontrado
+        "500":
+          description: No se encuentró producto
+  /productsManager:
+    get:
+      tags:
+        - Products
+      summary: Vista para manejar productos
+      description: Sol usuario con rol admin o premium pueden ingresar
+      responses:
+        "200":
+          description: Productos encontrados
+        "500":
+          description: Error del servidor
+    post:
+      tags:
+        - Products
+      summary: Agrega producto a la base de datos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/newProduct"
+  /{uid}:
+    put:
+      tags:
+        - Products
+      summary: Actualiza producto existente en la base de datos
+      parameters:
+        - name: uid
+          in: path
+          require: true
+          description: ID del producto a actualizar
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/newProduct"
+  /updateproducts/{pid}:
+    get:
+      tags:
+        - Products
+      summary: Vista del producto a actualizar
+      parameters:
+        - name: pid
+          in: path
+          require: true
+          description: ID del producto a actualizar
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/newProduct"
+  /productsManager/{uid}:
+    delete:
+      tags:
+        - Products
+      summary: Elimina un prodcuto de la base de datos
+      parameters:
+        - name: uid
+          in: path
+          require: true
+          description: ID del producto a eliminar
+          schema:
+            $type: string
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDB
+        title:
+          type: string
+          description: Nombre de producto
+        price:
+          type: number
+          description: Precio del producto
+        thubmnail:
+          type: url
+          description: url de imagen
+        code:
+          type: number
+          description: Código de producto (único)
+        status:
+          type: string
+          description: true or false
+        category:
+          type: string
+          description: Categoría de producto
+        stock:
+          type: number
+          description: cantidad en stock
+        owner:
+          type: string
+          description: Usuario que creo el producto
+  requestBodies:
+    newProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre de producto
+        price:
+          type: number
+          description: Precio del producto
+        thubmnail:
+          type: url
+          description: url de imagen
+        code:
+          type: number
+          description: Código de producto (único)
+        status:
+          type: string
+          description: true or false
+        category:
+          type: string
+          description: Categoría de producto
+        stock:
+          type: number
+          description: cantidad en stock
+        owner:
+          type: string
+          description: Usuario que creo el producto
+      example:
+        tile: Remera lista
+        price: 5000
+        thubmnail: https://cdn-icons-png.flaticon.com/512/1554/1554591.png
+        status: TRUE
+        category: REMERAS
+        stock: 20

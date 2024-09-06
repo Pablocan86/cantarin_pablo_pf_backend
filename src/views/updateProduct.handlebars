@@ -1,0 +1,63 @@
+<section class="productsManager">
+    <h2>ACTUALIZACIÓN PRODUCTO</h2>
+    <div class="titleProduct">{{result.title}}</div>
+    <p >ID: <span class="idProduct">{{result._id}}</span></p>
+    <form
+      class="UpdateProductForm"
+      
+    >
+
+      <label for="title">Nombre: </label>
+      <input type="text" name="title" id="titleProduct" />
+      <label for="description">Descripción: </label>
+      <input type="text" name="description" id="" />
+      <div>
+        <label for="price">Precio:</label>
+        <input type="number" name="price" id="" />
+        <label for="stock">Stock:</label>
+        <input type="number" name="stock" id="" />
+      </div>
+      <label for="thumbnail">Link imagen: </label>
+      <input type="url" name="thumbnail" />
+      <label for="code">Código de Producto</label>
+      <input type="text" name="code" />
+      <label for="status">Estado</label>
+      <input type="text" name="status" id="" />
+      <label for="category">Category (Mayúscula)</label>
+      <input type="text" name="category" id="" />
+      <div class="buttonDiv">
+        <button class="updateButton" type="submit">Actualizar</button>
+      </div>
+      {{#if error}}
+        <p class="error"><span class="material-symbols-outlined">
+            error
+          </span>
+          {{error}}
+          <span class="material-symbols-outlined">
+            error
+          </span></p>
+      {{else}}
+        {{#if result.agregado}}
+          <p class="agregado"><span class="material-symbols-outlined">
+              add_task
+            </span>
+            {{agregado}}
+            <span class="material-symbols-outlined">
+              add_task
+            </span></p>
+        {{else}}
+          <p></p>
+        {{/if}}
+      {{/if}}
+    </form>
+    <div class="linksDiv">
+   
+    <a class="linkOtherPage" href="../productsManager">Volver</a>
+    <form action="/api/sessions/logout" method="POST">
+        <button class="closeSession" >Cerrar Sesión</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script src="/js/updateProduct.js"></script>

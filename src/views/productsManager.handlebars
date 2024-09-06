@@ -1,0 +1,98 @@
+<div>
+  <div>
+    <p>¡Bienvenido {{user.first_name}}!</p>
+    {{#if isValid}}
+    <section class="sectionProducts">
+    <h2>PRODUCTOS</h2>
+<div class="productsContainer">
+
+    {{#each docs}}
+        <div class="cardProduct" data-id="{{this._id}}">
+          <h3 class="titleProduct">{{this.title}}</h3>
+          <img class="productImage" src="{{this.thumbnail}}" alt="" />
+          <p>$ {{this.price}}</p>
+          <div><a href="/updateproducts/{{this.id}}"><button class="addButton">Actualizar</button></a>
+          <button class="deleteButton" data-id="{{this._id}}">Eliminar </button></div>
+        </div>
+      {{/each}}
+</div>
+<br />
+<div>
+    {{#if hasPrevPage}}
+    <a href={{this.prevLink}}>
+        << Anterior</a>
+            {{/if}}
+            &nbsp;
+            {{this.page}}
+            &nbsp;
+            {{#if hasNextPage}}
+            <a href={{this.nextLink}}>Siguiente >></a>
+            {{/if}}
+</div>
+{{else}}
+<h1>No hay productos</h1>
+{{/if}}
+  <section class="productsManager">
+    <h2>AGREGAR PRODUCTO</h2>
+    <form
+      class="productsManagerForm"
+      action="/productsManager"
+      method="post"
+    >
+
+      <label for="title">Nombre: </label>
+      <input type="text" name="title" id="titleProduct" />
+      <label for="description">Descripción: </label>
+      <input type="text" name="description" id="" />
+      <div>
+        <label for="price">Precio:</label>
+        <input type="number" name="price" id="" />
+        <label for="stock">Stock:</label>
+        <input type="number" name="stock" id="" />
+      </div>
+      <label for="thumbnail">Link imagen: </label>
+      <input type="url" name="thumbnail" />
+      <label for="code">Código de Producto</label>
+      <input type="text" name="code" />
+      <label for="status">Estado</label>
+      <input type="text" name="status" id="" />
+      <label for="category">Category (Mayúscula)</label>
+      <input type="text" name="category" id="" />
+      <div class="buttonDiv">
+        <button class="addButton" type="submit">Agregar</button>
+      </div>
+      {{#if error}}
+        <p class="error"><span class="material-symbols-outlined">
+            error
+          </span>
+          {{error}}
+          <span class="material-symbols-outlined">
+            error
+          </span></p>
+      {{else}}
+        {{#if agregado}}
+          <p class="agregado"><span class="material-symbols-outlined">
+              add_task
+            </span>
+            {{agregado}}
+            <span class="material-symbols-outlined">
+              add_task
+            </span></p>
+        {{else}}
+          <p></p>
+        {{/if}}
+      {{/if}}
+    </form>
+    
+    <div class="linksDiv">
+    
+   <a class="linkOtherPage " href="../api/users">Gestionar usuarios</a>
+    <a class="linkOtherPage" href="./products">Vista cliente</a>
+    <form action="/api/sessions/logout" method="POST">
+        <button class="closeSession" type="submit">Cerrar Sesión</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script src="/js/products.js"></script>

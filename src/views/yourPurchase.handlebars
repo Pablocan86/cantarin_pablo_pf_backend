@@ -1,0 +1,10 @@
+<h1>SU COMPRA</h1>
+<div>
+  <h3>Código: {{ticket.code}}</h3>
+  <h4>Productos</h4>
+  {{#each products}}
+    <p>* {{this.title}}</p>
+  {{/each}}
+  <h4>Total: ${{ticket.amount}}.-</h4>
+  <a class="home" href="/products">Home</a>
+</div>

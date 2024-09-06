@@ -1,0 +1,35 @@
+<main><form class="loginForm" action="/api/sessions/login" method="POST">
+    <h2>Inicia Sesión</h2>
+    <label for="email">Email:</label>
+    <input type="email" name="email" required />
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" required />
+    {{#if Error}}
+      <p class="avisoError">{{Error}}
+      </p>
+    {{/if}}
+    <button class="submitButton" type="submit">Ingresar</button>
+
+    <div class="gitHubDiv">
+      <a class="loginTerceros" href="/api/sessions/github">
+        <img
+          class="imgLogin"
+          src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+          alt=""
+        /></a>
+      <a class="loginTerceros" href="/api/sessions/auth/google">
+        <img
+          class="imgLogin"
+          src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
+          alt=""
+        /></a>
+
+    </div>
+    <a class="changePassword" href="/changepassword">Cambiar mi contraseña</a>
+    <a class="registro" href="/register">Registrarse</a>
+
+  </form>
+
+  <img class="imgEcommerce" src="/images/ecommerce.jpg" alt="" />
+
+</main>

@@ -1,0 +1,100 @@
+<div>
+  <section class="sectionProducts">
+    <h2>PRODUCTOS</h2>
+
+    <div class="userInfo">
+      {{#if user}}
+      <div>
+        <p>¡Hola,
+          {{user.first_name}}
+          {{user.last_name}}!</p>
+         
+          <a class="linkPerfil" href="../api/sessions/current">Ir a mi Perfil<span class="material-symbols-outlined">people</span></a>
+          </div>
+          <p>Ultima conexión: {{user.last_connection}}</p>
+
+      {{else}}
+        <p>Inicia sesión para inicar la compra</p>
+      {{/if}}
+      {{#if user}}
+ {{#if isAdmin}}
+ {{else}}
+        <a
+          href="/carts/{{user.cart}}"
+          class="material-symbols-outlined"
+          id="imgCart"
+        >
+          {{#if cart.length}}
+            <p class="quantity">{{cart.length}}</p>
+          {{else}}
+            <p></p>
+          {{/if}}
+          shopping_cart
+        </a>
+        {{/if}}
+      {{else}}
+
+      {{/if}}
+    </div>
+  
+      {{#if response.payload.length}}
+
+        <div class="productsContainer">
+          {{#each response.payload}}
+            <div class="cardProduct">
+              <h3>{{this.title}}</h3>
+              <img class="productImage" src="{{this.thumbnail}}" alt="" />
+              <p>$ {{this.price}}</p>
+              <div class="detailsProduct">
+{{#if ../response/userOne}}
+                {{#if ../isAdmin}}
+                {{else}}
+                <form
+                  action="/carts/{{../response/userOne.cart}}/products/{{this._id}}"
+                  method="POST"
+                ><button class="addButton" data-id="{{this._id}}">Agregar
+                  </button></form>
+                {{/if}}
+                <a class="viewDetails" href="/productDetails/{{this._id}}">Ver
+                  más...</a></div>
+                  {{else}}
+                  <a class="viewDetails" href="/productDetails/{{this._id}}">Ver
+                  más...</a></div>
+                  {{/if}}
+            </div>
+          {{/each}}
+        </div>
+        <div>
+          {{#if response.hasPrevPage}}
+            <a href="{{response.prevLink}}">Anterior</a>
+          {{/if}}
+          &nbsp;
+          {{response.page}}
+          &nbsp;
+          {{#if response.hasNextPage}}
+            <a href="{{response.nextLink}}">Siguiente</a>
+          {{/if}}
+        </div>
+      {{else}}
+        <p>No products found.</p>
+      {{/if}}
+    
+    {{#if user}}
+    {{#if isAdmin}}
+    <form action="/productsManager" method="GET">
+  <button class="addButton">Vista administrador</button></form>
+    {{else}}
+  <form action="/messages" method="GET">
+  <button class="addButton">Chateá con nosotros</button></form>
+  {{/if}}
+      <form action="/api/sessions/logout" method="POST">
+        <button class="closeSession" type="submit">Cerrar Sesión</button>
+      </form>
+    {{else}}
+      <a class="linkOtherPage" href="/login">Inicia sesión</a>
+    {{/if}}
+  </section>
+
+</div>
+
+<script src="/js/products.js"></script>

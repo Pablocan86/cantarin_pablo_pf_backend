@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.divPrincipal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 30px;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+#btnEnviar {
+  background-color: rgb(15, 221, 15);
+  padding: 5px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+#muestraMensajes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+form input {
+  border: 1px solid gray;
+  outline: none;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  padding: 5px;
+  border-radius: 5px;
+}
+.messageItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0px 0px 5px gray;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px;
+  width: 70%;
+  background-color: rgb(152, 233, 71);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.material-symbols-outlined {
+  background-color: white;
+  border-radius: 50%;
+  padding: 2px;
+  margin-right: 2px;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+#close {
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
+}

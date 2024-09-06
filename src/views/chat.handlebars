@@ -1,0 +1,34 @@
+<div class="divPrincipal">
+  <h2>CHAT CLIENTES</h2>
+
+  <form action="/messages" method="post">
+    <label for="">{{user.first_name}}</label>
+    <label for="mensaje">Escriba su mensaje: </label>
+    <input type="text" name="mensaje" id="mensaje" />
+    <button type="submit" id="btnEnviar">Enviar</button>
+  </form>
+  <div id="muestraMensajes">
+    {{#each listMessages}}
+      <div class="messageItem">
+
+        <span class="material-symbols-outlined">
+          voice_selection
+        </span>
+        <p>
+          {{user}}
+          :
+          <span>{{message}}</span></p>
+        <span
+          id="close"
+          class="material-symbols-outlined deleteButton"
+          data-id="{{_id}}"
+        >
+          close
+        </span>
+      </div>
+    {{/each}}
+  </div>
+  <a href="./products">Volver a products</a>
+</div>
+
+<script src="/js/chat.js"></script>

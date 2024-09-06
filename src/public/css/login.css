@@ -1,0 +1,151 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("https://img.freepik.com/vector-gratis/fondo-tecnologia-digital-alambre-malla-red_1017-27428.jpg");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  height: 100vh;
+  width: 100%;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.loginForm {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgb(57, 11, 165);
+  margin: auto auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 350px;
+}
+
+.loginForm h2 {
+  margin: 0px auto;
+}
+.avisoError {
+  color: red;
+  width: 100%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.submitButton {
+  width: 100%;
+  background-color: blue;
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid blue;
+  border-radius: 5px;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 500ms;
+}
+
+input {
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px;
+  outline: none;
+  border: 1px solid gray;
+}
+
+.submitButton:hover {
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
+}
+
+.registro {
+  width: 100%;
+  height: 2rem;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid blue;
+  border-radius: 5px;
+  padding-top: 5px;
+  color: blue;
+  transition: all 500ms;
+}
+.registro:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+}
+
+.gitHubDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  padding-bottom: 5px;
+}
+
+.loginTerceros {
+  padding-left: 5px;
+  padding-right: 5px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.imgLogin {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  padding: 5px;
+  transition: all 1000ms;
+}
+.imgLogin:hover {
+  box-shadow: 0px 0px 10px black;
+}
+
+.imgEcommerce {
+  object-fit: fill;
+  width: 50%;
+
+  border-radius: 10px;
+}
+
+.changePassword {
+  text-align: center;
+  text-decoration: none;
+  background-color: red;
+  color: white;
+  width: 100%;
+  border-radius: 5px;
+  height: 20px;
+  transition: all 500ms;
+}
+
+.changePassword:hover {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}

@@ -1,0 +1,31 @@
+<h1>DOCUMENTACION</h1>
+<p>{{user.first_name}} {{user.last_name}}</p>
+<div class="divForm"><form
+    class="formDocuments"
+    action="/api/users/{{id}}/documents"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <label for="identification">DNI
+      <input type="file" id="identification" name="identification" /></label>
+    <label for="adressVerification">Comprobante de domicilio
+      <input
+        type="file"
+        id="adressVerification"
+        name="adressVerification"
+      /></label>
+    <label for="accountStatement">Comprobante de cuenta
+      <input
+        type="file"
+        id="accountStatement"
+        name="accountStatement"
+      /></label>
+    <button type="submit">Subir archivo</button>
+    {{#if message}}
+      <p>{{message}}</p>
+    {{else}}
+      <p></p>
+    {{/if}}
+  </form>
+  <a href="/profile">Volver a Perfil</a>
+</div>

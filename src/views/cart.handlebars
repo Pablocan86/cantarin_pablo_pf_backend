@@ -1,0 +1,40 @@
+<div class="divCart">
+  <h2>CARRITO</h2>
+  {{#if cart.products.length}}
+    {{#each cart.products}}
+   
+      <div class="productInCart" data-id="{{../cart._id}}">
+        <img class="imgProductCart" src="{{this.product.thumbnail}}" alt="" />
+        <p>{{this.product.title}}</p>
+      <div class="productsQuantity">
+        <button class="sumar addButton" data-id="{{this.product._id}}">+</button>
+         <p class="quantity">Cantidad: {{this.quantity}}</p>
+         <p>Total: {{this.totalPrice}}</p>
+        <button class="deleteButton" data-id="{{this.product._id}}">-</button>
+       </div>
+       
+        {{!-- <button class="deleteButton" data-id="{{this._id}}">Borrar</button> --}}
+       </div>
+       
+    {{/each}}
+    <p>Total: ${{{totalPrice}}}.-</p>
+    <a href="/carts/{{cart._id}}/purchase">Continuar con la compra</a>
+  {{else}}
+    <div class="carritoVacio">
+      <p>¿Aún no has añadido productos al carrito!</p>
+      <img
+        src="https://png.pngtree.com/background/20230813/original/pngtree-consumer-cat-shopping-cart-ridiculous-buy-photo-picture-image_4629778.jpg"
+        alt="Carrito de compras con gato"
+      />
+
+    </div>
+  {{/if}}
+  <div class="bottomButton ">
+ <form action="/messages" method="GET">
+  <button class="chat">Chateá con nosotros</button></form>
+  <a href="/products">Home</a>
+</div>
+</div>
+
+
+<script src="/js/cart.js"></script>

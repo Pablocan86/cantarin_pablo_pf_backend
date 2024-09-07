@@ -173,7 +173,10 @@ exports.checkout = async (req, res) => {
     let products = await productService.getProducts();
     for (const product of cart.products) {
       if (product.product.stock >= product.quantity) {
-        productStock.push({ title: product.product.title });
+        productStock.push({
+          title: product.product.title,
+          quantity: product.quantity,
+        });
         total = total + product.totalPrice;
       } else {
         productNoStock.push({ title: product.product.title });
@@ -182,6 +185,7 @@ exports.checkout = async (req, res) => {
     res.render("checkout", {
       ProductosConStock: productStock,
       ProductosSinStock: productNoStock,
+      id: cid,
       total: total,
       title: "Solo un paso más",
       style: "cart.css",
@@ -197,26 +201,27 @@ exports.buy = async (req, res) => {
   let productStock = [];
   let productNoStock = [];
   let total = 0;
+
   for (const product of cart.products) {
     if (product.product.stock >= product.quantity) {
-      productStock.push({ title: product.product.title });
+      productStock.push({
+        title: product.product.title,
+      });
       const productId = product._id;
       let newStock = product.product.stock - product.quantity;
       total = total + product.totalPrice;
+
       cart.total = cart.total - product.totalPrice;
       await productService.updateQuantity(product.product._id, newStock);
       await cartService.updateTotal(cid, cart.total);
-      console.log(
-        `Producto ${product.product.title} actualizado en base de datos`
-      );
       await cartService.updateCart(cid, productId);
     } else {
       productNoStock.push({ title: product.product.title });
-      console.log(`Producto ${product.product.title} sin stock`);
     }
   }
-  //CREAR TICKET
 
+  //CREAR TICKET
+  console.log("Fuera del for" + total);
   let codeCrypto = `${req.session.user.last_name}_${crypto
     .randomBytes(10)
     .toString("hex")}`;

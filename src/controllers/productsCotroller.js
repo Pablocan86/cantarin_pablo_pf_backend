@@ -19,7 +19,7 @@ exports.mockingProducts = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
-  let { limit = 3, page = 1, sort, category } = req.query;
+  let { limit = 10, page = 1, sort, category } = req.query;
   limit = parseInt(limit);
   page = parseInt(page);
 

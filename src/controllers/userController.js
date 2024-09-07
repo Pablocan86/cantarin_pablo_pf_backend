@@ -25,19 +25,15 @@ exports.putRolUser = async (req, res) => {
       const newRol = { rol: "user" };
       await userService.updateUserRol(user.email, newRol);
 
-      return res
-        .status(202)
-        .json({ message: `Se cambio rol de usuario a ${newRol.rol}` });
+      return res.status(202).json({ message: `Se ha cambiado el rol` });
     }
     if (user.rol === "user") {
       if (user.documents.length >= 3) {
         const newRol = { rol: "premium" };
         await userService.updateUserRol(user.email, newRol);
-        return res
-          .status(202)
-          .json({ message: `Se cambio rol de usuario a ${newRol.rol}` });
+        return res.status(202).json({ message: `Se ha cambiado el rol` });
       } else {
-        return res.status(202).json({ message: `Falta documentación` });
+        return res.status(202).json({ message: `Falta cargar documentación` });
       }
     }
     if (user.rol === "admin")

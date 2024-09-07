@@ -4,7 +4,10 @@
     <div class="stockProduct">
       <h4>Productos en stock</h4>
       {{#each ProductosConStock}}
-        <p>{{this.title}}</p>
+        <div style="display: flex;flex-direction:row;gap:20px;">
+          <p>{{this.title}}</p>
+          <p>Cantidad: {{this.quantity}}</p>
+        </div>
       {{/each}}
     </div>
   {{/if}}
@@ -18,7 +21,7 @@
   {{/if}}
   <p class="totalPrice">Costo total de la compra <span>${{total}}.-</span></p>
   <p>Los productos sin stock quedarán en el carrito</p>
-  <form action="/carts/668d5a5838afb182bb7ae891/purchase" method="post"><button
+  <form action="/carts/{{id}}/purchase" method="post"><button
       class="comprar"
     >Comprar</button></form>
 </div>

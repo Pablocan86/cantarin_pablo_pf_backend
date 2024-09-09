@@ -1,26 +1,15 @@
 const passport = require("passport");
 const userDTO = require("../dao/DTOs/user.dto");
 const { createHash, isValidPassword } = require("../utils.js");
-const nodemailer = require("nodemailer");
+const tra = require("nodemailer");
 const { devLogger, prodLogger } = require("../middleware/logger.js");
-const dotenv = require("dotenv");
+const { transport } = require("../middleware/mailer.js");
 const { v4: uuidv4 } = require("uuid");
 const TokenManager = require("../dao/classes/token.dao.js");
 const UserManager = require("../dao/classes/user.dao.js");
 
 const tokenService = new TokenManager();
 const userService = new UserManager();
-
-dotenv.config();
-
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  port: 587,
-  auth: {
-    user: process.env.usermail,
-    pass: process.env.pass,
-  },
-});
 
 exports.register = async (req, res) => {
   res.redirect("/userregistrade");
@@ -183,16 +172,7 @@ exports.current = async (req, res) => {
 exports.logout = async (req, res) => {
   const { email } = req.session.user;
   const date = new Date();
-  const formatDate = date.toLocaleDateString("es-AR", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
-  });
-  const last = { last_connection: formatDate };
+  const last = { last_connection: date };
   await userService.updateUser(email, last);
   req.session.destroy((err) => {
     if (err) {

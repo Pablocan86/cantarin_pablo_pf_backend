@@ -32,6 +32,10 @@ class UserManager {
   async updateUserRol(correo, rol) {
     await userModel.updateOne({ email: correo }, rol);
   }
+
+  async deleteUser(email) {
+    await userModel.findOneAndDelete(email);
+  }
 }
 
 module.exports = UserManager;

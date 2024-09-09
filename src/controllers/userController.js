@@ -1,6 +1,7 @@
 const UserManager = require("../dao/classes/user.dao.js");
 const upload = require("../middleware/multer.js");
 const userService = new UserManager();
+const { transport } = require("../middleware/mailer.js");
 
 exports.getUsers = async (req, res) => {
   try {
@@ -86,4 +87,59 @@ exports.postDocuments = async (req, res) => {
     id: uid,
     message: "Documentación cargada correctamente",
   });
+};
+
+exports.deleteInactive = async (req, res) => {
+  const host = req.get("host");
+  let users = await userService.getUsers();
+  let today = new Date();
+  let milisecondsPerDay = 1000 * 60 * 60 * 24;
+  for (let user of users) {
+    let diferenceInMiliseconds = new Date(user.last_connection) - today;
+    let daysDiference = diferenceInMiliseconds / milisecondsPerDay;
+    if (daysDiference >= 2 && user.rol != "admin") {
+      let mail = await transport.sendMail({
+        from: "pablo.cantarin86@gmail.com",
+        to: user.email,
+        subject: "Cuenta eliminada",
+        html: `  <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title><style>
+          body {
+            font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+              "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+          }
+
+          h1 {
+            background-color: black;
+            width: 100%;
+            color: white;
+            text-align: center;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>CUENTA ELIMINADA</h1>
+        <p>Hola ${user.first_name}!</p>
+        <div>
+          <p>Su cuenta fue eliminada por inactividad</p>
+          <p>Registrese nuevamente <a href="http://${host}/login">click aquí</a><p>
+
+        </div>
+      </body>
+      </html>
+    `,
+      });
+      let userEmail = { email: user.email };
+      await userService.deleteUser(userEmail);
+    }
+  }
+  let actualizateUsers = userService.getUsers();
+  res.send({ lista: actualizateUsers });
 };

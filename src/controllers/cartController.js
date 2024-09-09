@@ -4,20 +4,8 @@ const productManager = require("../dao/classes/product.dao.js");
 const productModel = require("../dao/models/product.model.js");
 const crypto = require("crypto");
 const ticketManager = require("../dao/classes/ticket.dao.js");
-const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
+const { transport } = require("../middleware/mailer.js");
 const { devLogger, prodLogger } = require("../middleware/logger.js");
-
-dotenv.config();
-
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  port: 587,
-  auth: {
-    user: process.env.usermail,
-    pass: process.env.pass,
-  },
-});
 
 const cartService = new cartManager();
 const productService = new productManager();
@@ -221,7 +209,6 @@ exports.buy = async (req, res) => {
   }
 
   //CREAR TICKET
-  console.log("Fuera del for" + total);
   let codeCrypto = `${req.session.user.last_name}_${crypto
     .randomBytes(10)
     .toString("hex")}`;

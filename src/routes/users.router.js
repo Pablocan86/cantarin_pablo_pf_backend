@@ -27,4 +27,6 @@ router.post(
 
 router.put("/premium/:uid", userController.putRolUser);
 
+router.delete("/", /*isAuthenticated, isAdmin*/ userController.deleteInactive);
+
 module.exports = router;

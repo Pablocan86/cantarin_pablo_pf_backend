@@ -81,23 +81,35 @@ exports.getProducts = async (req, res) => {
             }&category=${category || ""}`
           : null,
     };
-
+    let user = req.session.user;
+    let lastConnection = new Date(user.last_connection);
+    let formateLastConnection = lastConnection.toLocaleString("es-AR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
     //Renderizamos la vista
-    if (req.session.user.rol === "user" || req.session.user.rol === "premium") {
-      const cart = await cartService.getCartById(req.session.user.cart);
-      //   const cart = await cartModel.findById(req.session.user.cart);
+    if (user.rol === "user" || user.rol === "premium") {
+      const cart = await cartService.getCartById(user.cart);
+
       res.render("products", {
-        user: req.session.user,
+        user: user,
         cart: cart.products,
+        lastConnection: formateLastConnection,
         response,
         style: "products.css",
         title: "Productos",
       });
     } else {
       let isAdmin = true;
+
       res.render("products", {
         user: req.session.user,
         response,
+        lastConnection: formateLastConnection,
         style: "products.css",
         title: "Productos",
         isAdmin: isAdmin,

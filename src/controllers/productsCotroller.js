@@ -85,37 +85,45 @@ exports.getProducts = async (req, res) => {
           : null,
     };
     let user = req.session.user;
-    let lastConnection = new Date(user.last_connection);
-    let formateLastConnection = lastConnection.toLocaleString("es-AR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    });
-    //Renderizamos la vista
-    if (user.rol === "user" || user.rol === "premium") {
-      const cart = await cartService.getCartById(user.cart);
-
-      res.render("products", {
-        user: user,
-        cart: cart.products,
-        lastConnection: formateLastConnection,
-        response,
-        style: "products.css",
-        title: "Productos",
+    if (user) {
+      let lastConnection = new Date(user.last_connection);
+      let formateLastConnection = lastConnection.toLocaleString("es-AR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
       });
-    } else {
-      let isAdmin = true;
+      //Renderizamos la vista
+      if (user.rol === "user" || user.rol === "premium") {
+        const cart = await cartService.getCartById(user.cart);
 
+        res.render("products", {
+          user: user,
+          cart: cart.products,
+          lastConnection: formateLastConnection,
+          response,
+          style: "products.css",
+          title: "Productos",
+        });
+      } else {
+        let isAdmin = true;
+
+        res.render("products", {
+          user: req.session.user,
+          response,
+          lastConnection: formateLastConnection,
+          style: "products.css",
+          title: "Productos",
+          isAdmin: isAdmin,
+        });
+      }
+    } else {
       res.render("products", {
-        user: req.session.user,
         response,
-        lastConnection: formateLastConnection,
         style: "products.css",
         title: "Productos",
-        isAdmin: isAdmin,
       });
     }
 
@@ -155,6 +163,7 @@ exports.productDetails = async (req, res) => {
 
 exports.productsAdmin = async (req, res) => {
   try {
+    let isAdmin = true;
     let page = parseInt(req.query.page);
     if (!page) page = 1;
     let result = await productModel.paginate(
@@ -167,7 +176,7 @@ exports.productsAdmin = async (req, res) => {
     result.style = "products.css";
     result.title = "Administrador de productos";
     result.user = req.session.user;
-
+    result.isAdmin = isAdmin;
     res.render("productsManager", result);
     // res.send({ result: "success", payload: products });
   } catch (error) {

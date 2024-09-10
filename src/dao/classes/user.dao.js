@@ -33,8 +33,8 @@ class UserManager {
     await userModel.updateOne({ email: correo }, rol);
   }
 
-  async deleteUser(email) {
-    await userModel.findOneAndDelete(email);
+  async deleteUser(property) {
+    await userModel.findOneAndDelete(property);
   }
 }
 

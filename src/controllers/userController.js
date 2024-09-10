@@ -143,3 +143,19 @@ exports.deleteInactive = async (req, res) => {
   let actualizateUsers = userService.getUsers();
   res.send({ lista: actualizateUsers });
 };
+
+exports.deleteUser = async (req, res) => {
+  const host = req.get("host");
+  const { uid } = req.params;
+  let user = await userService.getUserById(uid);
+  try {
+    if (user) {
+      await userService.deleteUser({ email: user.email });
+      res.status(200).json({ message: "Usuario eliminado" });
+    } else {
+      res.status(200).json({ message: "Usuario inexistente" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error de servidor" });
+  }
+};

@@ -1,8 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
   const changeButton = document.querySelector(".changeButton");
+  const deleteUser = document.querySelector(".deleteUser");
   const path = window.location.pathname;
   const segment = path.split("/");
   const uid = segment[4];
+
+  deleteUser.addEventListener("click", async () => {
+    const host = window.location.host;
+    const confirmUpdate = await Swal.fire({
+      title: "Elimninar Usuario",
+      text: "¿Desea eliminar el usuario?",
+      icon: "question",
+      iconColor: "white",
+      background: "black",
+      showCancelButton: true,
+      confirmButtonColor: "blue",
+      cancelButtonColor: "red",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    });
+    const userId = changeButton.getAttribute("data-id");
+    if (confirmUpdate.isConfirmed) {
+      try {
+        const response = await fetch(`../${userId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        if (response.ok) {
+          if (result.message === "Usuario eliminado") {
+            const confirmate = await Swal.fire({
+              background: "black",
+              color: "white",
+              text: result.message,
+              icon: "success",
+              iconColor: "blue",
+              confirmButtonText: "OK",
+              confirmButtonColor: "blue",
+            });
+            if (confirmate.isConfirmed) {
+              window.location.href = `http://${host}/api/users`;
+            }
+          }
+        }
+      } catch (error) {}
+    }
+  });
 
   changeButton.addEventListener("click", async () => {
     const confirmUpdate = await Swal.fire({

@@ -1,14 +1,17 @@
 const productManager = require("../dao/classes/product.dao.js");
 const cartManager = require("../dao/classes/cart.dao.js");
 const productModel = require("../dao/models/product.model.js");
-const cartModel = require("../dao/models/cart.model.js");
+const userManager = require("../dao/classes/user.dao.js");
 const { generateProducts } = require("../utils.js");
+
+const userService = new userManager();
 const productService = new productManager();
 const cartService = new cartManager();
 const CustomError = require("../services/errors/CustomErrors.js");
 const EErrors = require("../services/errors/enum.js");
 const { iqualCode } = require("../services/errors/info.js");
 const { devLogger } = require("../middleware/logger.js");
+const { transport } = require("../middleware/mailer.js");
 
 exports.mockingProducts = async (req, res) => {
   let products = [];
@@ -156,7 +159,7 @@ exports.productsAdmin = async (req, res) => {
     if (!page) page = 1;
     let result = await productModel.paginate(
       {},
-      { page, limit: 3, lean: true }
+      { page, limit: 10, lean: true }
     );
     result.prevLink = result.hasPrevPage ? `?page=${result.prevPage}` : "";
     result.nextLink = result.hasNextPage ? `?page=${result.nextPage}` : "";
@@ -178,7 +181,7 @@ exports.addProductToBD = async (req, res) => {
     req.body;
   let page = parseInt(req.query.page);
   if (!page) page = 1;
-  let result = await productModel.paginate({}, { page, limit: 3, lean: true });
+  let result = await productModel.paginate({}, { page, limit: 10, lean: true });
   result.prevLink = result.hasPrevPage ? `?page=${result.prevPage}` : "";
   result.nextLink = result.hasNextPage ? `?page=${result.nextPage}` : "";
   result.isValid = !(page <= 0 || page > result.totalPages);
@@ -315,7 +318,46 @@ exports.deleteProductToDB = async (req, res) => {
     }
     if (rol === "admin") {
       await productService.deleteProduct(uid);
-      devLogger.debug("Producto eliminado por administrador");
+      if (product.owner != "admin") {
+        let user = await userService.getUserByEmail(product.owner);
+        let mail = await transport.sendMail({
+          from: "pablo.cantarin86@gmail.com",
+          to: product.owner,
+          subject: "Producto eliminado",
+          html: `  <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title><style>
+          body {
+            font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+              "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+          }
+
+          h1 {
+            background-color: black;
+            width: 100%;
+            color: white;
+            text-align: center;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>PRODUCTO ELIMINADO</h1>
+        <p>Estimado ${user.first_name}</p>
+        <div>
+          <p>Su producto: ${product.title} ha sido eliminado</p>
+        </div>
+      </body>
+      </html>
+    `,
+        });
+      }
+
       return res
         .status(200)
         .json({ message: "Producto eliminado exitosamente" });

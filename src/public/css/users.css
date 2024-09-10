@@ -97,3 +97,20 @@ h2 {
   flex-direction: column;
   gap: 10px;
 }
+
+.deleteUser {
+  background-color: red;
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid red;
+  border-radius: 5px;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.deleteUser:hover {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}

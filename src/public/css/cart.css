@@ -129,6 +129,7 @@ a:hover {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 .chat {
@@ -204,6 +205,17 @@ a:hover {
   border-radius: 5px;
 }
 
+.total {
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  margin: auto;
+  background-color: rgb(233, 51, 51);
+  width: 300px;
+  padding: 2px;
+}
+
 .comprar,
 .home {
   display: flex;
@@ -224,4 +236,14 @@ a:hover {
   background-color: white;
   border: 1px solid blue;
   color: blue;
+}
+
+.seguirComprando {
+  background-color: black;
+}
+
+.seguirComprando:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
 }

@@ -1,7 +1,6 @@
 const passport = require("passport");
 const userDTO = require("../dao/DTOs/user.dto");
 const { createHash, isValidPassword } = require("../utils.js");
-const tra = require("nodemailer");
 const { devLogger, prodLogger } = require("../middleware/logger.js");
 const { transport } = require("../middleware/mailer.js");
 const { v4: uuidv4 } = require("uuid");
@@ -55,6 +54,7 @@ exports.changePasswordGet = async (req, res) => {
 };
 
 exports.changePasswordPost = async (req, res) => {
+  const host = req.get("host");
   let correo = req.body.correo;
   let user = await userService.getUserByEmail(correo);
   let token = uuidv4();
@@ -97,7 +97,7 @@ exports.changePasswordPost = async (req, res) => {
     <p>Hola ${user.first_name}!</p>
     <div>
       <p>Ingresa al siguiente link:</p>
-      <p>http://localhost:8080/reset_password?token=${token}</p>
+      <p>http://${host}/reset_password?token=${token}</p>
     </div>
   </body>
   </html>

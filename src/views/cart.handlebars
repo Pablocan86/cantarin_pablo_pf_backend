@@ -17,8 +17,8 @@
        </div>
        
     {{/each}}
-    <p>Total: ${{{totalPrice}}}.-</p>
-    <a href="/carts/{{cart._id}}/purchase">Continuar con la compra</a>
+    <p class="total">Total: ${{{totalPrice}}}.-</p>
+   
   {{else}}
     <div class="carritoVacio">
       <p>¿Aún no has añadido productos al carrito!</p>
@@ -32,7 +32,11 @@
   <div class="bottomButton ">
  <form action="/messages" method="GET">
   <button class="chat">Chateá con nosotros</button></form>
-  <a href="/products">Home</a>
+  {{#if cart.products.length}}
+   <a href="/carts/{{cart._id}}/purchase">Ir a pagar</a>
+   {{else}}
+   {{/if}}
+  <a class="seguirComprando" href="/products">Segui comprando</a>
 </div>
 </div>
 

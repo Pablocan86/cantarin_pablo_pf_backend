@@ -1,48 +1,79 @@
-a<div class="divDetails">
-  {{#if user}}
-    {{#if isAdmin}}{{else}}
-      <a
-        href="/carts/{{user.cart}}"
-        class="material-symbols-outlined"
-        id="imgCart"
-      >
-        {{#if cart.length}}
-          <p class="quantity">{{cart.length}}</p>
-        {{else}}
-          <p></p>
-        {{/if}}
-        shopping_cart
-      </a>
-    {{/if}}
-  {{else}}
-  {{/if}}
-  <section class="productDetails">
-    <h3>{{product.title}}</h3>
-    <div class="priceAndMore">
-      <img class="imgDetail" src="{{product.thumbnail}}" alt="" />
-      <div class="details">
-        <p>Descripción: {{product.description}}</p>
-        <p>Precio: $ {{product.price}}.-</p>
-        <p>Categoria: {{product.category}}</p>
-        <div class="btns">
-          {{#if user}}
-            {{#if isAdmin}}{{else}}
-              <form
-                action="/carts/{{user.cart}}/products/{{product._id}}"
-                method="POST"
-              ><button class="addButton">Agregar </button></form>
-            {{/if}}
-            <a href="/products"><button class="shoping">Seguir comprando</button></a>
+<header><img
+    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQsAAAC9CAMAAACTb6i8AAABblBMVEX///9WW27wBIDtfwb66Br//v96tR0GXqX8//////1UWmthZHdMUWa/wMYAl6DkNDZIUGSBg5NYWm9SV2tJTGOYmqVMU2bMzdLd3eCmqLC3t77///j85QD7//zudgDsfwbw8fPHys746ADvAHgAkJvwdADwAHRurwAAU6GMjpnz9Pbo6OtwcoBCSl6ChpCvsLj89K/67Xf961X67WD584X++Nb898D57m727EP/+eH8++3d8/J9xcRZrLaaztS02tsAlaRrur7785750OXyj7r0UZnyKozyN5DwY6P2qMv96/Utnqr4tM/23uz8+MQAk5Evo6TyV5vxf7So1db2a6b44s30zK73wpjytIbuoln369r21K/svIXzpWrwkkPyn1rwk0e926OpzXGPvknf7s6w0oOHqslMgblvmL/J2eXompXpW1376+umwtblJSP30dIZaKjvt7eZx1TwkpXb68LkFhPogIT21tBYh7k8P1sxyd63AAALhklEQVR4nO2ci38TNxLHtYQFaa2FtbVPO07WeXsf3tJ3Qx9wFChcuWu5hmvTXp/QAqW0vZbr8d/fjNZe24kN6eeauJb1hQ+2tYs/0i8zo9FIG0I0Go1Go9FoNBqNRqPRaDQajUaj0Wg0Go1Go9FoNBqNRqPRaDRAmzFiMtKadT/+DLQpJZSCGosOKNB64cKLL738CmULrwZ7dW157fTa8vJrLbbobvLq2umS5ddb5qw7c/KYJjVNhgNn9I2BFCDGBTrrnp04ZhkY2jByZr421OL02u6suzYDLr751ltvUxNlgVAx1OKFWXfshGGUvbOxce7cxrmL8HZ3xCxOL7/cvwcmWMooVT58mObFjUvnJJRM0wIwTXiZaU+Pnza5XCpx7tI7hLXWRsRY/ouMq4RceffqtVPXrr934yaRGYiqtMlf+1psvAnjfGl5JHa+IU3i/etb66dK1t+7pbJxsDEt6N9GQudLcJnevDoQQoqx/q7CWhByeaPyERj7hYFhrJ1+AxzkyqgSUo0PqbJeYrKLf8fYeencB8TEDOPlZVRjee31V2jrsBRSjFn3+bgwcU4FB9n4IJapZ4u8cuH02tqLL7RJu3XzkBIoxm3KVJ1eGbv49uXL/6hMv2W2WNvErIJ+NEmLU1tX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"
+    alt=""
+  />
+  <nav>
+    <ul>
 
+      <li>
+        {{#if user}}<a
+            class="linkPerfil"
+            href="../api/sessions/current"
+          >Perfil</a>{{else}}{{/if}}</li>
+      <li>{{#if user}}
+          {{#if isAdmin}}
+            <form action="/productsManager" method="GET">
+              <button class="closeSession">Vista administrador</button></form>
           {{else}}
-            <a href="/products"><button class="shoping">Ver todos</button></a>
+            <form action="/messages" method="GET">
+              <button class="closeSession">Chateá con nosotros</button></form>
           {{/if}}
+
+        {{/if}}</li>
+      <li>{{#if user}}
+          <form action="/api/sessions/logout" method="POST">
+            <button class="closeSession" type="submit">Cerrar Sesión</button>
+          </form>{{else}}<a class="linkPerfil" href="../login">Iniciar sesión</a>{{/if}}</li>
+
+    </ul>{{#if user}}
+      {{#if isAdmin}}{{else}}
+        <a
+          href="/carts/{{user.cart}}"
+          class="material-symbols-outlined"
+          id="imgCart"
+        >
+          {{#if cart.length}}
+            <p class="quantity">{{cart.length}}</p>
+          {{else}}
+            <p></p>
+          {{/if}}
+          shopping_cart
+        </a>
+      {{/if}}
+    {{else}}
+
+    {{/if}}</nav></header>
+<main>
+  <div class="divDetails">
+
+    <section class="productDetails">
+      <h3>{{product.title}}</h3>
+      <div class="priceAndMore">
+        <img class="imgDetail" src="{{product.thumbnail}}" alt="" />
+        <div class="details">
+          <p>Descripción: {{product.description}}</p>
+          <p>Precio: $ {{product.price}}.-</p>
+          <p>Categoria: {{product.category}}</p>
+          <div class="btns">
+            {{#if user}}
+              {{#if isAdmin}}{{else}}
+                <form
+                  action="/carts/{{user.cart}}/products/{{product._id}}/productDetails"
+                  method="POST"
+                ><button class="addButton">Agregar </button></form>
+              {{/if}}
+              <a href="/products"><button class="shoping">Seguir comprando</button></a>
+
+            {{else}}
+              <a href="/products"><button class="shoping">Ver todos</button></a>
+            {{/if}}
+          </div>
+
         </div>
 
       </div>
+    </section>
+  </div>
+</main>
 
-    </div>
-  </section>
-</div>
-
-<script src="/js/productDetails.js"></script>
+<script src="/js/productsDetails.js"></script>

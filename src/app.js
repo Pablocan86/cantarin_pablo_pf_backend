@@ -34,7 +34,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(
   session({
-    // store: new FileStoreInstance({ path: "./session", ttl: 100, retries: 0 }),
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URL,
     }),
@@ -47,7 +46,6 @@ app.use(
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));

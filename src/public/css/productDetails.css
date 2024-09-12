@@ -9,7 +9,73 @@ body {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   width: 100%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+header img {
+  width: 100px;
+  height: 100px;
+}
+
+header nav {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 50%;
+  gap: 20px;
+}
+
+header nav ul li:hover {
+  border-bottom: 1px solid black;
+}
+.closeSession {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  box-shadow: none;
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.linkPerfil {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: black;
+}
+
 .divDetails {
   margin: auto;
   position: relative;
@@ -20,32 +86,31 @@ body {
   padding: 20px;
 }
 #imgCart {
-  background-color: white;
-  box-shadow: 0px 0px 10px blue;
-  font-size: 2rem;
-  text-decoration: none;
+  width: 50px;
+  height: 50px;
+  object-position: center;
+  position: relative;
+  transition: all 1000ms;
   color: black;
-  border-radius: 50%;
-  padding: 5px;
-  position: absolute;
-  top: 15px;
-  left: 90%;
 }
 
+#imgCart:hover {
+  scale: 1.2;
+  color: red;
+}
 .quantity {
+  width: 0.8rem;
+  height: 0.8rem;
+  text-align: center;
   position: absolute;
+  color: white;
+  background-color: black;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  background-color: blue;
-  box-shadow: 0px 0px 5px black;
-  color: white;
-  font-size: 1rem;
   border-radius: 50%;
-  padding: 5px 10px 5px 10px;
-
-  text-align: center;
-  bottom: 70%;
-  left: 70%;
+  font-size: 0.8rem;
+  left: 20px;
+  top: 20px;
 }
 .productDetails {
   width: 90%;

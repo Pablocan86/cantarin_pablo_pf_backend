@@ -8,7 +8,7 @@
       <li>
         {{#if user}}<a
             class="linkPerfil"
-            href="../../api/sessions/current"
+            href="../../../api/sessions/current"
           >Perfil</a>{{else}}{{/if}}</li>
       <li>{{#if user}}
           {{#if isAdmin}}
@@ -27,34 +27,40 @@
 
     </ul>
   </nav></header>
-<h2>Finaliza tu compra</h2>
-<div class="finallyProducts"><h3>PRODUCTOS</h3>
-  {{#if ProductosConStock}}
-    <div class="stockProduct">
-      <h4>Productos en stock</h4>
-      {{#each ProductosConStock}}
-        <div style="display: flex;flex-direction:row;gap:20px;">
-          <p>{{this.title}}</p>
-          <p>Cantidad: {{this.quantity}}</p>
-        </div>
+<main>
+  <div class="divCart">
+    <h2>MIS COMPRAS</h2>
+    {{#if tickets.length}}
+      {{#each tickets}}
+      <div style="border:1px solid black">
+
+        <h3>Código de pedido:{{this.code}}</h3>
+        {{#each this.products}}
+          <div><p>Producto: {{this.title}}</p>
+          <p>Cantidad: {{this.quantity}}</p></div>
+         
+        {{/each}}
+ <p>Total: {{this.amount}}</p>
+ <p>Fecha: {{this.purchase_datetime}}</p>
       {{/each}}
+      </div>
+
+    {{else}}
+      <div class="carritoVacio">
+        <p>¿Aún no tiene compras!</p>
+        <img
+          src="https://png.pngtree.com/background/20230813/original/pngtree-consumer-cat-shopping-cart-ridiculous-buy-photo-picture-image_4629778.jpg"
+          alt="Carrito de compras con gato"
+        />
+
+      </div>
+    {{/if}}
+    <div class="bottomButton">
+      <form action="/messages" method="GET">
+        <button class="chat">Chateá con nosotros</button></form>
+      <a class="shoping" href="/products">Segui comprando</a>
     </div>
-  {{/if}}
-  {{#if ProductosSinStock}}
-    <div class="noStockProduct">
-      <h4>Productos sin stock</h4>
-      {{#each ProductosSinStock}}
-        <p>{{this.title}}</p>
-      {{/each}}
-    </div>
-  {{/if}}
-  <p class="totalPrice">Costo total de la compra <span>${{total}}.-</span></p>
-  <p>Los productos sin stock quedarán en el carrito</p>
-  <form action="/carts/{{id}}/purchase" method="post"><button
-      class="comprar"
-    >Comprar</button></form>
-</div>
-{{!-- <p>Código de Compra # {{ticket.code}}</p>
-<p>Fecha: {{ticket.purchase_datetime}}</p>
-<p>Total: ${{ticket.amount}}.-</p>
-<p>Correo Usuario: {{ticket.purchaser}}</p> --}}
+  </div>
+</main>
+
+<script src="/js/cart.js"></script>

@@ -1,6 +1,9 @@
 const UserManager = require("../dao/classes/user.dao.js");
+const TicketManager = require("../dao/classes/ticket.dao.js");
 const upload = require("../middleware/multer.js");
 const userService = new UserManager();
+const ticketService = new TicketManager();
+
 const { transport } = require("../middleware/mailer.js");
 
 exports.getUsers = async (req, res) => {
@@ -89,6 +92,24 @@ exports.postDocuments = async (req, res) => {
     user: req.session.user,
     id: uid,
     message: "Documentación cargada correctamente",
+  });
+};
+
+exports.userBuy = async (req, res) => {
+  const { uid } = req.params;
+  const user = req.session.user;
+  const tickets = [];
+  if (uid === user.id) {
+    const ticket = await ticketService.getTicketByEmail(user.email);
+    for (const e of ticket) {
+      tickets.push(e);
+    }
+  }
+
+  res.render("shopping", {
+    style: "shopping.css",
+    tickets: tickets,
+    user: user,
   });
 };
 

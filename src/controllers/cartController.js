@@ -2,6 +2,7 @@ const cartManager = require("../dao/classes/cart.dao.js");
 const cartModel = require("../dao/models/cart.model.js");
 const productManager = require("../dao/classes/product.dao.js");
 const productModel = require("../dao/models/product.model.js");
+const userManager = require("../dao/classes/user.dao.js");
 const crypto = require("crypto");
 const ticketManager = require("../dao/classes/ticket.dao.js");
 const { transport } = require("../middleware/mailer.js");
@@ -10,6 +11,7 @@ const { devLogger, prodLogger } = require("../middleware/logger.js");
 const cartService = new cartManager();
 const productService = new productManager();
 const ticketService = new ticketManager();
+const userService = new userManager();
 
 exports.getcarts = async (req, res) => {
   try {
@@ -34,12 +36,13 @@ exports.addCart = async (req, res) => {
 
 exports.getCartById = async (req, res) => {
   let { cid } = req.params;
-
+  const user = req.session.user;
   try {
     let cart = await cartService.getCartByIdPopulate(cid);
     let cartSimple = await cartService.getCartById(cid);
     res.render("cart", {
       cart,
+      user: user,
       totalPrice: cartSimple.total,
       style: "cart.css",
       title: "Carrito",
@@ -182,6 +185,7 @@ exports.deleteProduct = async (req, res) => {
 exports.checkout = async (req, res) => {
   try {
     let { cid } = req.params;
+    const user = req.session.user;
     let productStock = [];
     let productNoStock = [];
     let total = 0;
@@ -199,9 +203,11 @@ exports.checkout = async (req, res) => {
         productNoStock.push({ title: product.product.title });
       }
     }
+    console.log(productStock);
     res.render("checkout", {
       ProductosConStock: productStock,
       ProductosSinStock: productNoStock,
+      user: user,
       id: cid,
       total: total,
       title: "Solo un paso más",
@@ -215,6 +221,7 @@ exports.checkout = async (req, res) => {
 exports.buy = async (req, res) => {
   let { cid } = req.params;
   let cart = await cartService.getCartByIdPopulate(cid);
+  let user = req.session.user;
   let productStock = [];
   let productNoStock = [];
   let total = 0;
@@ -223,6 +230,7 @@ exports.buy = async (req, res) => {
     if (product.product.stock >= product.quantity) {
       productStock.push({
         title: product.product.title,
+        quantity: product.quantity,
       });
       const productId = product._id;
       let newStock = product.product.stock - product.quantity;
@@ -242,11 +250,22 @@ exports.buy = async (req, res) => {
     .randomBytes(10)
     .toString("hex")}`;
   let code = codeCrypto;
+  let date = new Date();
+  const formatDate = date.toLocaleDateString("es-AR", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
   let ticket = {
     code: code,
-    purchase_datetime: new Date(),
+    purchase_datetime: formatDate,
     amount: total,
     purchaser: req.session.user.email,
+    products: productStock,
   };
   let mail = await transport.sendMail({
     from: "pablo.cantarin86@gmail.com",
@@ -263,6 +282,7 @@ exports.buy = async (req, res) => {
     ticket: ticket,
     products: productStock,
     productNoStock: productNoStock,
+    user: user,
     title: "Tu pedido",
     style: "cart.css",
   });

@@ -10,6 +10,11 @@ class TicketManager {
     return ticket;
   }
 
+  async getTicketByEmail(email) {
+    const ticket = await ticketModel.find({ purchaser: email }).lean();
+    return ticket;
+  }
+
   async createTicket(ticket) {
     const newTicket = await ticketModel.create(ticket);
     return newTicket;

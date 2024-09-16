@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const result = await response.json();
         if (response.ok) {
-          alert(result.message);
           window.location.reload();
           return;
         } else {
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const result = await response.json();
         if (response.ok) {
-          alert(result.message);
           window.location.reload();
           return;
           //remover el elemento del DOM

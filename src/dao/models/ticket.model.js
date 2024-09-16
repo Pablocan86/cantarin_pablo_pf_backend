@@ -7,6 +7,10 @@ const ticketSchema = new mongoose.Schema({
   purchase_datetime: { type: String },
   amount: { type: Number },
   purchaser: { type: String },
+  products: {
+    type: [],
+    default: [],
+  },
 });
 
 const ticketModel = mongoose.model(ticketCollection, ticketSchema);

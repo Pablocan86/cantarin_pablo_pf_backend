@@ -12,7 +12,7 @@
   <button class="closeSession">Chateá con nosotros</button></form>
   {{/if}}
       
-    
+    <li> {{#if user}}{{#if isAdmin}}{{else}} <form action="/api/users/shopping/{{user.id}}" method="GET"><button class="closeSession"  >Mis Compras</button></form> {{/if}}{{else}}{{/if}}</li> 
     {{/if}}</li>
   <li>{{#if user}} <form action="/api/sessions/logout" method="POST">
         <button class="closeSession" type="submit">Cerrar Sesión</button>

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteButtons = document.querySelectorAll(".deleteButton");
   const titleProduct = document.querySelector(".titleProduct").textContent;
   deleteButtons.forEach((button) => {
+    const host = window.location.host;
     button.addEventListener("click", async () => {
       const productId = button.getAttribute("data-id");
       const confirmDelete = await Swal.fire({
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
               confirmButtonColor: "blue",
               confirmButtonText: "Ok",
             });
-            window.location.reload();
+            window.location.href = `http://${host}/productsManager`;
           } else {
             const errorData = await response.text();
             console.log("Error al elminar el producto", errorData);

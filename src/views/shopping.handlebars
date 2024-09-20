@@ -28,22 +28,23 @@
     </ul>
   </nav></header>
 <main>
-  <div class="divCart">
-    <h2>MIS COMPRAS</h2>
+  <h2>MIS COMPRAS</h2>
+  <div class="shoppingList">
     {{#if tickets.length}}
       {{#each tickets}}
-      <div style="border:1px solid black">
+        <div class="itemList">
+          <p class="dateShopping">{{this.purchase_datetime}}</p>
+          {{#each this.products}}
+            <div class="product">
+              <p>Producto: {{this.title}}</p>
+              <p>Cantidad: {{this.quantity}}</p>
+            </div>
+          {{/each}}
+          <p class="totalPrice"> Total: $ {{this.amount}}</p>
 
-        <h3>Código de pedido:{{this.code}}</h3>
-        {{#each this.products}}
-          <div><p>Producto: {{this.title}}</p>
-          <p>Cantidad: {{this.quantity}}</p></div>
-         
-        {{/each}}
- <p>Total: {{this.amount}}</p>
- <p>Fecha: {{this.purchase_datetime}}</p>
+          <h3 class="codeShopping">Código de pedido: {{this.code}}</h3>
+        </div>
       {{/each}}
-      </div>
 
     {{else}}
       <div class="carritoVacio">
@@ -52,15 +53,37 @@
           src="https://png.pngtree.com/background/20230813/original/pngtree-consumer-cat-shopping-cart-ridiculous-buy-photo-picture-image_4629778.jpg"
           alt="Carrito de compras con gato"
         />
-
       </div>
     {{/if}}
-    <div class="bottomButton">
-      <form action="/messages" method="GET">
-        <button class="chat">Chateá con nosotros</button></form>
-      <a class="shoping" href="/products">Segui comprando</a>
-    </div>
+  </div>
+  <div class="bottomButton">
+    <form action="/messages" method="GET">
+      <button class="chat">Chateá con nosotros</button></form>
+    <a class="shoping" href="/products">Segui comprando</a>
   </div>
 </main>
-
+<footer>
+  <div>
+    <a href="">
+      <img
+        class="imgSocialMedia"
+        src="https://cdn-icons-png.flaticon.com/512/1377/1377212.png"
+        alt="logo de youtube"
+      />
+    </a>
+    <a href="">
+      <img
+        class="imgSocialMedia"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1200px-Instagram_icon.png"
+        alt="logo de instgram"
+      /></a>
+    <a href="">
+      <img
+        class="imgSocialMedia"
+        src="https://png.pngtree.com/png-vector/20230225/ourmid/pngtree-whatsapp-phone-social-media-icon-png-image_6618454.png"
+        alt="logo de whatsapp"
+      />
+    </a>
+  </div>
+</footer>
 <script src="/js/cart.js"></script>

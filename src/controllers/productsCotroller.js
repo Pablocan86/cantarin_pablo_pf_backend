@@ -292,7 +292,9 @@ exports.updateProductToDB = async (req, res) => {
     };
     const result = await productService.updateProduct(productoActualizado);
 
-    return res.status(200).json({ message: "Producto eliminado exitosamente" });
+    return res
+      .status(200)
+      .json({ message: "Producto actualizado exitosamente" });
   } catch (error) {
     console.error(error);
     res

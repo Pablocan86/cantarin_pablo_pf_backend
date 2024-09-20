@@ -4,9 +4,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const idProduct = document.querySelector(".idProduct");
   const form = document.querySelector(".UpdateProductForm");
 
-  updateButton.addEventListener("click", async () => {
-    const confirmUpdate = confirm(`Actualizara ${titleProduct.textContent}`);
-    if (confirmUpdate) {
+  updateButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const host = window.location.host;
+    const confirmUpdate = await Swal.fire({
+      title: `Actualizar Producto: ${titleProduct.textContent}`,
+      text: "¿Desea actualizar el producto?",
+      icon: "question",
+      iconColor: "white",
+      background: "black",
+      showCancelButton: true,
+      confirmButtonColor: "blue",
+      cancelButtonColor: "red",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    });
+
+    if (confirmUpdate.isConfirmed) {
       try {
         const formData = new FormData(form);
         const formDataObj = Object.fromEntries(formData.entries());
@@ -20,13 +34,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (response.ok) {
-          alert("Producto actualizado correctamente");
+          await Swal.fire({
+            text: `Producto actualizado `,
+            icon: "success",
+            iconColor: "blue",
+            background: "black",
+            cancelButton: false,
+            confirmButtonColor: "blue",
+            confirmButtonText: "Ok",
+          });
+
+          window.location.href = `http://${host}/updateproducts/${idProduct.textContent}`;
         } else {
           const errorData = await response.text();
-          console.log("Error al actualizar", errorData);
+          await Swal.fire({
+            text: `Producto ${titleProduct.textContent} no se puede actualizar`,
+            icon: "warnign",
+            iconColor: "red",
+            background: "black",
+            cancelButton: false,
+            confirmButtonColor: "blue",
+            confirmButtonText: "Ok",
+          });
         }
-
-        window.location.reload();
       } catch (error) {
         console.log("No se ha actualizado", error);
       }

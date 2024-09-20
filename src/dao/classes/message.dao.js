@@ -3,7 +3,12 @@ const messageModel = require("../models/message.model");
 class MessageManager {
   constructor() {}
 
-  async addMessage(user, message) {
+  async getMessages(user) {
+    const messages = await messageModel.find({ user: user }).lean();
+    return messages;
+  }
+
+  async createMessage(user, message) {
     const newMessage = await messageModel.create({
       user: user,
       message: message,

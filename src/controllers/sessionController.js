@@ -135,7 +135,7 @@ exports.changePasswordPut = async (req, res) => {
     let isSamePassword = isValidPassword(user, password);
     if (isSamePassword) {
       return res
-        .status(400)
+        .status(200)
         .json({ message: "No se puede utilizar la misma contraseña" });
     } else {
       let newPassword = createHash(password);

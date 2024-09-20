@@ -97,3 +97,19 @@ form {
 .rol {
   text-transform: uppercase;
 }
+
+.changePassword {
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  transition: all 500ms;
+}
+
+.changePassword:hover {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}

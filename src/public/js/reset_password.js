@@ -1,5 +1,5 @@
 const correo = document.querySelector(".correo").textContent;
-
+const host = window.location.host;
 document
   .getElementById("changePasswordForm")
   .addEventListener("submit", async function (event) {
@@ -13,11 +13,19 @@ document
     ).value;
 
     if (passwordOne !== passwordRepeat) {
-      alert("Las contraseñas no coinciden.");
+      const error = await Swal.fire({
+        title: "Las contraseñas no coinciden",
+        color: "white",
+        icon: "warning",
+        iconColor: "yeloww",
+        background: "black",
+        confirmButtonColor: "blue",
+        confirmButtonText: "Ok",
+      });
       return;
     }
 
-    const response = await fetch("/api/sessions/change_password", {
+    const response = await fetch(`/api/sessions/change_password`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -27,11 +35,31 @@ document
         correo: correo,
       }),
     });
-
+    const result = await response.json();
     if (response.ok) {
-      alert("Contraseña cambiada con éxito.");
-      window.location.href = `/login`;
-    } else {
-      alert("Esta intentando usar la misma contraseña que ya tiene");
+      if (result.message === "No se puede utilizar la misma contraseña") {
+        const warning = await Swal.fire({
+          title: "No puede utilizar la contraseña actual",
+          color: "white",
+          icon: "warning",
+          iconColor: "yeloww",
+          background: "black",
+          confirmButtonColor: "blue",
+          confirmButtonText: "Ok",
+        });
+        return;
+      }
+      if (result.message === "Contraseña actualizada correctamente") {
+        const warning = await Swal.fire({
+          title: result.message,
+          color: "white",
+          icon: "success",
+          iconColor: "green",
+          background: "black",
+          confirmButtonColor: "blue",
+          confirmButtonText: "Ok",
+        });
+        window.location.href = `http://${host}/login`;
+      }
     }
   });

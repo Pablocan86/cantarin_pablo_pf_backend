@@ -13,8 +13,15 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+body h2 {
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
 
 .divPrincipal {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -26,14 +33,20 @@ body {
 }
 
 #btnEnviar {
-  background-color: rgb(15, 221, 15);
+  background-color: blue;
   padding: 5px;
   font-size: 1rem;
-  border: none;
+  border: 1px solid blue;
   border-radius: 5px;
   color: white;
   margin: 5px;
   cursor: pointer;
+}
+
+#btnEnviar:hover {
+  background-color: white;
+  color: blue;
+  border: 1px solid blue;
 }
 #muestraMensajes {
   display: flex;
@@ -53,13 +66,14 @@ form input {
 .messageItem {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0px 0px 5px gray;
   border-top-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 10px;
-  width: 70%;
-  background-color: rgb(152, 233, 71);
+  width: 100%;
+  background-color: rgb(190, 175, 175);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 

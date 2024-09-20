@@ -6,7 +6,9 @@
   <p></p>
   <p>Correo: {{user.email}}</p>
   <p class="rol">{{user.rol}}</p>
-  <a class="linkDocumentation" href="../../api/users/{{id}}/documents">Cargar documentación</a>
+  <div>
+    <a class="linkDocumentation" href="../../api/users/{{id}}/documents">Cargar documentación</a>
+  </div>
   {{else}}
   <p>{{./error}}</p>
   {{/if}}
@@ -15,6 +17,7 @@
 <form action="/api/sessions/logout" method="POST">
   <a class="linkDocumentation" href="../../products">Volver</a>
   <button class="cerrarSesion" type="submit">Cerrar Sesión</button>
+  
 </form>
 {{else}}
 <form action="/login" method="GET">

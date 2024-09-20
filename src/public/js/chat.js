@@ -4,11 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
   deleteButtons.forEach((span) => {
     span.addEventListener("click", async () => {
       const messageId = span.getAttribute("data-id");
-      const confirmDelete = confirm(
-        "¿Estás seguro de que deseas eliminar este mensaje?"
-      );
+      const confirmDelete = await Swal.fire({
+        text: "¿Desea eliminar el mensaje?",
+        color: "white",
+        icon: "question",
+        iconColor: "white",
+        background: "black",
+        showCancelButton: true,
+        confirmButtonColor: "blue",
+        cancelButtonColor: "red",
+        confirmButtonText: "Si",
+        cancelButtonText: "No",
+      });
 
-      if (confirmDelete) {
+      if (confirmDelete.isConfirmed) {
         try {
           const response = await fetch(`/messages/${messageId}`, {
             method: "DELETE",
@@ -16,11 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
               "Content-Type": "application/json",
             },
           });
-
+          const result = await response.json();
           if (response.ok) {
-            alert("Mensaje eliminado exitosamente");
-
-            span.parentElement.remove();
+            if (result.message === `Mensaje borrado`) {
+              span.parentElement.remove();
+            }
           } else {
             alert("Error al eliminar el mensaje");
           }

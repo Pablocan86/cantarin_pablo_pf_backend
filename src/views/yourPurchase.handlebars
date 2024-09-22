@@ -8,7 +8,7 @@
       <li>
         {{#if user}}<a
             class="linkPerfil"
-            href="../api/sessions/current"
+            href="../../api/sessions/current"
           >Perfil</a>{{else}}{{/if}}</li>
       <li>{{#if user}}
           {{#if isAdmin}}
@@ -30,7 +30,7 @@
 <main>
   <h2>SU COMPRA</h2>
   <div class="cardBuy">
-    <h3>Código: {{ticket.code}}</h3>
+    <h3>Código de pédido: {{ticket.code}}</h3>
     <h4>Productos</h4>
     {{#each products}}
       <p>* {{this.title}}</p>
@@ -38,7 +38,8 @@
     <h4>Total: ${{ticket.amount}}.-</h4>
 
   </div>
-  <a class="home" href="/products">Home</a></main>
+  <a class="home" href="/api/users/shopping/{{user.id}}">Mis comprar</a>
+</main>
 <footer>
   <div>
     <a href="">

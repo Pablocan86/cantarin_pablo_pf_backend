@@ -64,7 +64,7 @@ const swaggerOptions = {
     openapi: `3.0.1`,
     info: {
       title: "Documentación ecommerce Cantarin",
-      description: `Proyecto del curso de Backend con el tío Omar 👮‍♂️.`,
+      description: `Proyecto del curso de Backend.`,
     },
   },
   apis: [`${__dirname}/docs/**/*.yaml`],

@@ -203,7 +203,6 @@ exports.checkout = async (req, res) => {
         productNoStock.push({ title: product.product.title });
       }
     }
-    console.log(productStock);
     res.render("checkout", {
       ProductosConStock: productStock,
       ProductosSinStock: productNoStock,

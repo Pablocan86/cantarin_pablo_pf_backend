@@ -27,33 +27,59 @@
 
     </ul>
   </nav></header>
-<h2>Finaliza tu compra</h2>
-<div class="finallyProducts"><h3>PRODUCTOS</h3>
-  {{#if ProductosConStock}}
-    <div class="stockProduct">
-      <h4>Productos en stock</h4>
-      {{#each ProductosConStock}}
-        <div style="display: flex;flex-direction:row;gap:20px;">
+<main>
+  <h2>Finaliza tu compra</h2>
+  <div class="finallyProducts"><h3>PRODUCTOS</h3>
+    {{#if ProductosConStock}}
+      <div class="stockProduct">
+        <h4>Productos en stock</h4>
+        {{#each ProductosConStock}}
+          <div style="display: flex;flex-direction:row;gap:20px;">
+            <p>{{this.title}}</p>
+            <p>Cantidad: {{this.quantity}}</p>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if ProductosSinStock}}
+      <div class="noStockProduct">
+        <h4>Productos sin stock</h4>
+        {{#each ProductosSinStock}}
           <p>{{this.title}}</p>
-          <p>Cantidad: {{this.quantity}}</p>
-        </div>
-      {{/each}}
-    </div>
-  {{/if}}
-  {{#if ProductosSinStock}}
-    <div class="noStockProduct">
-      <h4>Productos sin stock</h4>
-      {{#each ProductosSinStock}}
-        <p>{{this.title}}</p>
-      {{/each}}
-    </div>
-  {{/if}}
-  <p class="totalPrice">Costo total de la compra <span>${{total}}.-</span></p>
-  <p>Los productos sin stock quedarán en el carrito</p>
-  <form action="/carts/{{id}}/purchase" method="post"><button
-      class="comprar"
-    >Comprar</button></form>
-</div>
+        {{/each}}
+      </div>
+    {{/if}}
+    <p class="totalPrice">Costo total de la compra <span>${{total}}.-</span></p>
+    <p>Los productos sin stock quedarán en el carrito</p>
+    <form action="/carts/{{id}}/purchase" method="post"><button
+        class="comprar"
+      >Comprar</button></form>
+  </div>
+</main>
+<footer>
+  <div>
+    <a href="">
+      <img
+        class="imgSocialMedia"
+        src="https://cdn-icons-png.flaticon.com/512/1377/1377212.png"
+        alt="logo de youtube"
+      />
+    </a>
+    <a href="">
+      <img
+        class="imgSocialMedia"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1200px-Instagram_icon.png"
+        alt="logo de instgram"
+      /></a>
+    <a href="">
+      <img
+        class="imgSocialMedia"
+        src="https://png.pngtree.com/png-vector/20230225/ourmid/pngtree-whatsapp-phone-social-media-icon-png-image_6618454.png"
+        alt="logo de whatsapp"
+      />
+    </a>
+  </div>
+</footer>
 {{!-- <p>Código de Compra # {{ticket.code}}</p>
 <p>Fecha: {{ticket.purchase_datetime}}</p>
 <p>Total: ${{ticket.amount}}.-</p>

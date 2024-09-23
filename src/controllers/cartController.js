@@ -224,65 +224,72 @@ exports.buy = async (req, res) => {
   let productStock = [];
   let productNoStock = [];
   let total = 0;
+  try {
+    for (const product of cart.products) {
+      if (product.product.stock >= product.quantity) {
+        productStock.push({
+          title: product.product.title,
+          quantity: product.quantity,
+        });
+        const productId = product._id;
+        let newStock = product.product.stock - product.quantity;
+        total = total + product.totalPrice;
 
-  for (const product of cart.products) {
-    if (product.product.stock >= product.quantity) {
-      productStock.push({
-        title: product.product.title,
-        quantity: product.quantity,
-      });
-      const productId = product._id;
-      let newStock = product.product.stock - product.quantity;
-      total = total + product.totalPrice;
-
-      cart.total = cart.total - product.totalPrice;
-      await productService.updateQuantity(product.product._id, newStock);
-      await cartService.updateTotal(cid, cart.total);
-      await cartService.updateCart(cid, productId);
-    } else {
-      productNoStock.push({ title: product.product.title });
+        cart.total = cart.total - product.totalPrice;
+        await productService.updateQuantity(product.product._id, newStock);
+        await cartService.updateTotal(cid, cart.total);
+        await cartService.updateCart(cid, productId);
+      } else {
+        productNoStock.push({ title: product.product.title });
+      }
     }
+    if (productStock.length > 0) {
+      //CREAR TICKET
+      let codeCrypto = `${req.session.user.last_name}_${crypto
+        .randomBytes(10)
+        .toString("hex")}`;
+      let code = codeCrypto;
+      let date = new Date();
+      const formatDate = date.toLocaleDateString("es-AR", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+      });
+      let ticket = {
+        code: code,
+        purchase_datetime: formatDate,
+        amount: total,
+        purchaser: req.session.user.email,
+        products: productStock,
+      };
+      let mail = await transport.sendMail({
+        from: "pablo.cantarin86@gmail.com",
+        to: req.session.user.email,
+        subject: "Gracias por tu compra",
+        html: `<div>
+              <h1>Orden # ${ticket.code}</h1>
+              <p>Total de compra $ ${ticket.amount}.-</p>
+              <p>Gracias por su compra</p>
+              </div>`,
+      });
+      let result = await ticketService.createTicket(ticket);
+      res.render("yourPurchase", {
+        ticket: ticket,
+        products: productStock,
+        productNoStock: productNoStock,
+        user: user,
+        title: "Tu pedido",
+        style: "cart.css",
+      });
+      return;
+    } else {
+      res.redirect("/products");
+    }
+  } catch (error) {
+    res.statu(500).json({ message: "Error de conexión" });
   }
-
-  //CREAR TICKET
-  let codeCrypto = `${req.session.user.last_name}_${crypto
-    .randomBytes(10)
-    .toString("hex")}`;
-  let code = codeCrypto;
-  let date = new Date();
-  const formatDate = date.toLocaleDateString("es-AR", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
-  });
-  let ticket = {
-    code: code,
-    purchase_datetime: formatDate,
-    amount: total,
-    purchaser: req.session.user.email,
-    products: productStock,
-  };
-  let mail = await transport.sendMail({
-    from: "pablo.cantarin86@gmail.com",
-    to: req.session.user.email,
-    subject: "Gracias por tu compra",
-    html: `<div>
-          <h1>Orden # ${ticket.code}</h1>
-          <p>Total de compra $ ${ticket.amount}.-</p>
-          <p>Gracias por su compra</p>
-          </div>`,
-  });
-  let result = await ticketService.createTicket(ticket);
-  res.render("yourPurchase", {
-    ticket: ticket,
-    products: productStock,
-    productNoStock: productNoStock,
-    user: user,
-    title: "Tu pedido",
-    style: "cart.css",
-  });
 };

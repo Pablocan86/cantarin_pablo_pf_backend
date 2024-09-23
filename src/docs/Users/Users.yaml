@@ -44,6 +44,53 @@ paths:
           description: Se cambio rol de usuario
         "505":
           description: Ocurrio un error al procesar la solicitud
+  /api/users/shopping/{uid}:
+    get:
+      tags:
+        - Users
+      summary: Muestra las compras hechas por el usuario
+      description: Se debe estar logueado como usuario
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario
+          schema:
+            $type: string
+      responses:
+        "202":
+          description: Compras del usuario
+        "505":
+          description: Ocurrio un error al procesar la solicitud
+  /api/users/{uid}/documents:
+    post:
+      tags:
+        - Users
+      summary: Upload documentación de usuario
+      description: Sube la documentación al perfil de usuari para poder cambiar de rol
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: id del usuario
+          schema:
+            $type: string
+      responses:
+        "202":
+          description: Carga correcta
+        "505":
+          description: Ocurrio un error al procesar la solicitud
+  /api/users:
+    delete:
+      tags:
+        - Users
+      summary: Elimina usuarios
+      description: Elimina los usuarios con un plazo de más de dos días sin conexión
+      responses:
+        "202":
+          description: Usuarios eliminados
+        "505":
+          description: Ocurrio un error al procesar la solicitud
 components:
   schemas:
     User:

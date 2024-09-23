@@ -7,16 +7,21 @@ const sessionController = require("../controllers/sessionController.js");
 const userDTO = require("../dao/DTOs/user.dto");
 const router = express.Router();
 
+//Vista de la páginade logueo
 router.get("/login", isNotAuthenticated, (req, res) => {
   res.render("login", { style: "login.css", title: "Bienvenido" });
 });
 
+//Vista de la página que pide correo para enviar link de cambio de contraseña
 router.get("/changepassword", sessionController.changePasswordGet);
 
+//Envía correo con lonik de cambio de contrase{a}
 router.post("/changepassword", sessionController.changePasswordPost);
 
+//Vista para cambiar contraseña
 router.get("/reset_password", sessionController.reset_password);
 
+//Viste de usuario registrado
 router.get("/userregistrade", (req, res) => {
   res.render("registrade", {
     style: "login.css",
@@ -24,10 +29,12 @@ router.get("/userregistrade", (req, res) => {
   });
 });
 
+//Vista para registrarse
 router.get("/register", isNotAuthenticated, (req, res) => {
   res.render("register", { style: "register.css", title: "Registro" });
 });
 
+//Vista de datosd de perfil
 router.get("/profile", isAuthenticated, (req, res) => {
   try {
     let id = req.session.user.id;

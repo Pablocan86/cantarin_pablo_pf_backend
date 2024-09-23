@@ -116,6 +116,24 @@ paths:
           description: id del producto a eliminar
           schema:
             $type: string
+  /carts/{cid}/products/{pid}/productDetails:
+    post:
+      tags:
+        - Carts
+      summary: Agrega un producto al carrito desde la vista de detalles del producto
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: string
+        - name: pid
+          in: path
+          required: true
+          description: id del producto a agregar
+          schema:
+            $type: string
 components:
   schemas:
     Cart:
